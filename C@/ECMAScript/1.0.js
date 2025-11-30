@@ -42,7 +42,7 @@ function Run_Cdog(c) {
         if (Cdog.import.code[2]) {
           if (Cdog.import.code[2] === 'from') {
             if (Cdog_data.libs[lib_Cdog['data.json'].sod.name]) {
-              Cdog_data.libs[lib_Cdog['data.json'].sod.name].froms.push[Cdog.import.code[3]]
+              Cdog_data.libs[lib_Cdog['data.json'].sod.name].froms.push(Cdog.import.code[3])
             } else {
               Cdog_data.libs[lib_Cdog['data.json'].sod.name] = {
                 "file": Cdog.import.code[1],
