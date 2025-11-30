@@ -1,7 +1,17 @@
 {
   "data.json": {
     "type": "json",
-    "sod": {},
+    "sod": {
+      "name": "ExampleLib",
+      "creators": [
+        "User12345"
+      ],
+      "description": "Example lib for C@",
+      "version": "1.0",
+      "docs": "https://docs.example.com/MainPage",
+      "github": "https://github.com/example/example",
+      "Site": "https://example.com/"
+    },
     "metadata": {
       "name": "data"
     }
