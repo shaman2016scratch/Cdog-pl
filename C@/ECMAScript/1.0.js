@@ -39,9 +39,18 @@ function Run_Cdog(c) {
       Cdog.import.code = Cdog.i2.split(" ")
       if (Cdog_data.src[Cdog.import.code[1]]) {
         lib_Cdog = Cdog_data.src[Cdog.import.code[1]]
-        Cdog_data.libs[lib_Cdog['data.json'].sod.name] = {
-          "file": Cdog.import.code[1],
-          "from": "main",
+        if (Cdog.import.code[2]) {
+          if (Cdog.import.code[2] === 'from') {
+            Cdog_data.libs[lib_Cdog['data.json'].sod.name] = {
+              "file": Cdog.import.code[1],
+              "from": Cdog.import.code[3],
+            }
+          } else {
+            Cdog_data.libs[lib_Cdog['data.json'].sod.name] = {
+              "file": Cdog.import.code[1],
+              "from": "main",
+            }
+          }
         }
       } else {
         console.error('File not found')
