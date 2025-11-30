@@ -36,6 +36,18 @@ function Run_Cdog(c) {
       }
     } else if (Cdog.i2 === 'let main()' || Cdog.i2 === 'public static void main()' || Cdog.i2 === 'int main()') {
       libraries = Object.keys(Cdog_data.libs)
+      for(i = 0; i < libraries.length; i++) {
+        lib = Cdog_data.libs[libraries[i]]
+        lib_Cdog = Cdog_data.src[lib]
+        for(i2 = 0; i2 < lib.froms.length; i2++) {
+          if (lib_Cdog['data.json'].sod.pl === 'Cdog') {
+            Run_Cdog(lib_Cdog[lib_Cdog['data.json'].sod.from[lib.froms[i]]].code)
+          } else if (lib_Cdog['data.json'].sod.pl === "ECMAScript") {
+            code = lib_Cdog[lib_Cdog['data.json'].sod.from[lib.froms[i]]].code
+            code()
+          }
+        }
+      }
       Cdog.i++; Cdog.i2 = Cdog.code[Cdog.i]; Cdog.main.code = Cdog.i2.split(";")
       for(Cdog.main.i = 0; Cdog.main.i < Cdog.main.code.length; Cdog.main.i++) {
         Cdog.main.i2 = Cdog.main.code[Cdog.main.i]
