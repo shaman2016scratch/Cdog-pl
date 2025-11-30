@@ -54,7 +54,9 @@ function Run_Cdog(c) {
           } else {
             Cdog_data.libs[lib_Cdog['data.json'].sod.name] = {
               "file": Cdog.import.code[1],
-              "from": "main",
+              "froms": [
+                "main"
+              ],
             }
           }
         }
