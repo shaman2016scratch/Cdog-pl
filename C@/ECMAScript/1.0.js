@@ -33,7 +33,7 @@ function Run_Cdog(c) {
           Cdog.system.i = Cdog.system.i+5
         }
       }
-    } else if (Cdog.i2 === 'let main()') {
+    } else if (Cdog.i2 === 'let main()' || Cdog.i2 === 'public static void main()' || Cdog.i2 === 'int main()') {
       Cdog.i++; Cdog.main.code = Cdog.i2.split(";")
     } else if (Cdog.i2.split(" ")[0] === '#include' || Cdog.i2.split(" ")[0] === '#import' || Cdog.i2.split(" ")[0] === 'import') {
       Cdog.import.code = Cdog.i2.split(" ")
