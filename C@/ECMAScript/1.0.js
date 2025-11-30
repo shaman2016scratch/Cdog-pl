@@ -77,7 +77,7 @@ function Run_Cdog(c) {
           }
         }
       } else {
-        console.error('File not found')
+        MakeError('file not found', Cdog.import.code[1])
       }
     }
   }
@@ -89,5 +89,14 @@ function Cdog_value(v) {
     return UserReporters[v.type](v.value)
   } else if (typeof v === 'object' || typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean') {
     return v
+  }
+}
+function MakeError(e, p) {
+  if (e === 'file not found') {
+    console.error(`[C@] File "${p}" not found`)
+  } else if (e === 'command not found') {
+    console.error(`[C@] Command "${p.c}" not found. (${p.s})`)
+  } else if (e === 'syntax error') {
+    console.error(`[C@] Syntax error: ${p}`)
   }
 }
