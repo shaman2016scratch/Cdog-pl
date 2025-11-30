@@ -19,7 +19,7 @@ function Run_Cdog(c) {
       Cdog.i++; Cdog.system.code = Cdog.i2.split("&^")
     } else if (Cdog.i2 === 'let main()') {
       Cdog.i++; Cdog.main.code = Cdog.i2.split(";")
-    } else if (Cdog.i2.split[" "][0] === '#include' || Cdog.i2.split[" "][0] === '#import' || Cdog.i2.split[" "][0] === 'import') {
+    } else if (Cdog.i2.split(" ")[0] === '#include' || Cdog.i2.split(" ")[0] === '#import' || Cdog.i2.split(" ")[0] === 'import') {
       Cdog.import.code = Cdog.i2.split(" ")
       if (Cdog_data.src[Cdog.import.code[1]]) {
         lib_Cdog = Cdog_data.src[Cdog.import.code[1]]
