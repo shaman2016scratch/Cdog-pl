@@ -10,7 +10,10 @@
       "version": "1.0",
       "docs": "https://docs.example.com/MainPage",
       "github": "https://github.com/example/example",
-      "Site": "https://example.com/"
+      "Site": "https://example.com/",
+      "from": {
+        "main": "main.cdc"
+      }
     },
     "metadata": {
       "name": "data",
