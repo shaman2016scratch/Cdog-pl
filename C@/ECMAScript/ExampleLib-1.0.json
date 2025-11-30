@@ -13,7 +13,8 @@
       "Site": "https://example.com/",
       "from": {
         "main": "main.cdc"
-      }
+      },
+      "pl": "Cdog" // ещё JavaScript
     },
     "metadata": {
       "name": "data",
