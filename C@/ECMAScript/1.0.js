@@ -39,7 +39,7 @@ function Run_Cdog(c) {
       for(Cdog.main.i = 0; Cdog.main.i < Cdog.main.code.length; Cdog.main.i++) {
         Cdog.main.i2 = Cdog.main.code[Cdog.main.i]
         if (Cdog.main.i2.split(" ")[0] === 'var') {
-          if (Cdog.main.i2.split(" ")[1].split(".")) {
+          if (Cdog.main.i2.split(" ")[1].split(".").length > 1) {
             i2 = Cdog.main.i2.split(" ")[1].split(".")
             i3 = "Cdog_peremens"
             for(i = 0; i < i2.length; i++) {
