@@ -1,7 +1,7 @@
 // C@ code
 // Created by SHAMAN2016
 // License: MIT
-Commands = []; UserCommands = {};
+UserCommands = {}; UserReporters = {};
 Cdog = {}
 Cdog_config = {
   "user": {},
@@ -11,6 +11,7 @@ Cdog_data = {
   "libs": {},
   "src": {}
 }
+Cdog_peremens = {}
 function Run_Cdog(c) {
   Cdog.code = c.split("^;")
   for(Cdog.i = 0; Cdog.i < Cdog.code.length; Cdog.i++) {
@@ -34,7 +35,22 @@ function Run_Cdog(c) {
         }
       }
     } else if (Cdog.i2 === 'let main()' || Cdog.i2 === 'public static void main()' || Cdog.i2 === 'int main()') {
-      Cdog.i++; Cdog.main.code = Cdog.i2.split(";")
+      Cdog.i++; Cdog.i2 = Cdog.code[Cdog.i]; Cdog.main.code = Cdog.i2.split(";")
+      for(Cdog.main.i = 0; Cdog.main.i < Cdog.main.code.length; Cdog.main.i++) {
+        Cdog.main.i2 = Cdog.main.code[Cdog.main.i]
+        if (Cdog.main.i2.split(" ")[0] === 'var') {
+          if (Cdog.main.i2.split(" ")[1].split(".")) {
+            i2 = Cdog.main.i2.split(" ")[1].split(".")
+            i3 = "Cdog_peremens"
+            for(i = 0; i < i2.length; i++) {
+              i3 = `${i3}[Cdog_value(${i2[i]})]`
+            }
+            eval(`${i3} = Cdog_value(${i2[i]})`)
+          } else {
+            Cdog_peremens[Cdog.main.i2.split(" ")[1]] === Cdog.main.i2.split(" ")[3]
+          }
+        }
+      }
     } else if (Cdog.i2.split(" ")[0] === '#include' || Cdog.i2.split(" ")[0] === '#import' || Cdog.i2.split(" ")[0] === 'import') {
       Cdog.import.code = Cdog.i2.split(" ")
       if (Cdog_data.src[Cdog.import.code[1]]) {
@@ -64,5 +80,14 @@ function Run_Cdog(c) {
         console.error('File not found')
       }
     }
+  }
+}
+function Cdog_value(v) {
+  if (typeof v === 'object' && v.type === "value") {
+    return v.value
+  } else if (typeof v === 'object' && UserReporters[v.type]) {
+    return UserReporters[v.type](v.value)
+  } else if (typeof v === 'object' || typeof v === 'text' || typeof v === 'number' || typeof v === 'boolean') {
+    return v
   }
 }
