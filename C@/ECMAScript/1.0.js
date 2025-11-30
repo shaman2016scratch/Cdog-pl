@@ -47,7 +47,7 @@ function Run_Cdog(c) {
             }
             eval(`${i3} = Cdog_value(${i2[i]})`)
           } else {
-            Cdog_peremens[Cdog.main.i2.split(" ")[1]] === Cdog.main.i2.split(" ")[3]
+            Cdog_peremens[Cdog.main.i2.split(" ")[1]] = Cdog.main.i2.split(" ")[3]
           }
         }
       }
@@ -87,7 +87,7 @@ function Cdog_value(v) {
     return v.value
   } else if (typeof v === 'object' && UserReporters[v.type]) {
     return UserReporters[v.type](v.value)
-  } else if (typeof v === 'object' || typeof v === 'text' || typeof v === 'number' || typeof v === 'boolean') {
+  } else if (typeof v === 'object' || typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean') {
     return v
   }
 }
