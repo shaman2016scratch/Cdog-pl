@@ -35,6 +35,7 @@ function Run_Cdog(c) {
         }
       }
     } else if (Cdog.i2 === 'let main()' || Cdog.i2 === 'public static void main()' || Cdog.i2 === 'int main()') {
+      libraries = Object.keys(Cdog_data.libs)
       Cdog.i++; Cdog.i2 = Cdog.code[Cdog.i]; Cdog.main.code = Cdog.i2.split(";")
       for(Cdog.main.i = 0; Cdog.main.i < Cdog.main.code.length; Cdog.main.i++) {
         Cdog.main.i2 = Cdog.main.code[Cdog.main.i]
@@ -65,6 +66,7 @@ function Run_Cdog(c) {
                 "froms": [
                   Cdog.import.code[3]
                 ],
+                "lang": lib_Cdog['data.json'].sod.pl,
               }
             }
           } else {
@@ -73,6 +75,7 @@ function Run_Cdog(c) {
               "froms": [
                 "main"
               ],
+              "lang": lib_Cdog['data.json'].sod.pl,
             }
           }
         }
