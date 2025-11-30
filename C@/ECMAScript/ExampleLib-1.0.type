@@ -13,7 +13,16 @@
       "Site": "https://example.com/"
     },
     "metadata": {
-      "name": "data"
+      "name": "data",
+      "type": "JavaScript Object Notation",
+    }
+  },
+  "main.cdc": {
+    "type": "cdc",
+    "code": "",
+    "metadata": {
+      "name": "main",
+      "type": "Cdog Code"
     }
   }
 }
