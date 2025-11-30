@@ -39,7 +39,10 @@ function Run_Cdog(c) {
       Cdog.import.code = Cdog.i2.split(" ")
       if (Cdog_data.src[Cdog.import.code[1]]) {
         lib_Cdog = Cdog_data.src[Cdog.import.code[1]]
-        Cdog_data.libs[lib_Cdog['data.json'].sod.name] = lib_Cdog
+        Cdog_data.libs[lib_Cdog['data.json'].sod.name] = {
+          "file": Cdog.import.code[1],
+          "from": "main",
+        }
       } else {
         console.error('File not found')
       }
