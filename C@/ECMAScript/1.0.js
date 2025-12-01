@@ -92,18 +92,22 @@ function Run_Cdog(c) {
         } else if (Cdog.main.i2.split(" ")[0] === 'function') {
           i = Cdog.main.i2.split(" ")
           if (i[1] === 'command') {
-            UserCommands[i[2]] = "Cdog_"
+            UserCommands[i[2]] = [["args"], "Run_Cdog('"]
             Cdog.main.i++; Cdog.main.i2 = Cdog.main.code[Cdog.main.i]; i3 = Cdog.main.i2.split('*^')
             for(i2 = 0; i2 < i3.length; i2++) {
-              UserCommands[i[2]] = `${UserCommands[i[2]]}%^%${i3[i2]}`
+              UserCommands[i[2]] = `${UserCommands[i[2]]}${i3[i2]}`
             }
+            UserCommands[i[2]] = `${UserCommands[i[2]]}')`
           } else if (i[1] === 'reporter') {
-            UserReporters[i[2]] = "Cdog_"
+            UserReporters[i[2]] = [["args"], "Run_Cdog('"]
             Cdog.main.i++; Cdog.main.i2 = Cdog.main.code[Cdog.main.i]; i3 = Cdog.main.i2.split('*^')
             for(i2 = 0; i2 < i3.length; i2++) {
-              UserReporters[i[2]] = `${UserReporters[i[2]]}%^%${i3[i2]}`
+              UserReporters[i[2]] = `${UserReporters[i[2]]}${i3[i2]}`
             }
+            UserReporters[i[2]] = `${UserReporters[i[2]]}')`
           }
+        } else if (UserCommands[Cdog.main.i2.split(" ")[0]]) {
+          func = UserCommands[Cdog.main.i2.split(" ")[0]]; code = new Function(func[0], func[1]); code(Cdog.main.i2.split(" ")[1])
         }
       }
     } else if (Cdog.i2.split(" ")[0] === '#include' || Cdog.i2.split(" ")[0] === '#import' || Cdog.i2.split(" ")[0] === 'import') {
@@ -143,7 +147,7 @@ function Cdog_value(v) {
   if (typeof v === 'object' && v.type === "value") {
     return v.value;
   } else if (typeof v === 'object' && UserReporters[v.type]) {
-    return UserReporters[v.type](v.value);
+    func = UserReporters[v.type]; code = new Function(func[0], func[1]); return code(v.value)
   } else if (typeof v === 'string' && v.includes('.')) {
     const value = getNestedValue(Cdog_peremens, v);
     return value !== undefined ? value : v;
