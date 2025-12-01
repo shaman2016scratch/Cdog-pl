@@ -12,6 +12,21 @@ Cdog_data = {
   "src": {}
 }
 Cdog_peremens = {}
+function setNestedValue(obj, path, value) {
+  const keys = path.split('.');
+  let current = obj;
+  
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    
+    if (i === keys.length - 1) {
+      current[key] = value;
+    } else {
+      if (!current[key]) current[key] = {};
+      current = current[key];
+    }
+  }
+}
 function Run_Cdog(c) {
   Cdog.code = c.split("^;")
   for(Cdog.i = 0; Cdog.i < Cdog.code.length; Cdog.i++) {
@@ -53,12 +68,9 @@ function Run_Cdog(c) {
         Cdog.main.i2 = Cdog.main.code[Cdog.main.i]
         if (Cdog.main.i2.split(" ")[0] === 'var') {
           if (Cdog.main.i2.split(" ")[1].split(".").length > 1) {
-            i2 = Cdog.main.i2.split(" ")[1].split(".")
-            i3 = "Cdog_peremens"
-            for(i = 0; i < i2.length; i++) {
-              i3 = `${i3}[Cdog_value(${i2[i]})]`
-            }
-            eval(`${i3} = Cdog_value(${i2[i]})`)
+            const varPath = Cdog.main.i2.split(" ")[1];
+            const value = Cdog_value(Cdog.main.i2.split(" ")[3]);
+            setNestedValue(Cdog_peremens, varPath, value);
           } else {
             Cdog_peremens[Cdog.main.i2.split(" ")[1]] = Cdog.main.i2.split(" ")[3]
           }
