@@ -27,6 +27,17 @@ function setNestedValue(obj, path, value) {
     }
   }
 }
+function getNestedValue(obj, path) {
+  const keys = path.split('.');
+  let current = obj;
+  for (const key of keys) {
+    if (current === null || current === undefined || !(key in current)) {
+      return undefined;
+    }
+    current = current[key];
+  }
+  return current;
+}
 function Run_Cdog(c) {
   Cdog.code = c.split("^;")
   for(Cdog.i = 0; Cdog.i < Cdog.code.length; Cdog.i++) {
@@ -67,12 +78,31 @@ function Run_Cdog(c) {
       for(Cdog.main.i = 0; Cdog.main.i < Cdog.main.code.length; Cdog.main.i++) {
         Cdog.main.i2 = Cdog.main.code[Cdog.main.i]
         if (Cdog.main.i2.split(" ")[0] === 'var') {
-          if (Cdog.main.i2.split(" ")[1].split(".").length > 1) {
-            const varPath = Cdog.main.i2.split(" ")[1];
-            const value = Cdog_value(Cdog.main.i2.split(" ")[3]);
-            setNestedValue(Cdog_peremens, varPath, value);
-          } else {
-            Cdog_peremens[Cdog.main.i2.split(" ")[1]] = Cdog.main.i2.split(" ")[3]
+          const parts = Cdog.main.i2.trim().split(/\s+/);
+          if (parts.length >= 4 && parts[2] === '=') {
+            const varPath = parts[1];
+            const rawValue = parts[3];
+            if (rawValue.includes('.')) {
+              const value = getNestedValue(Cdog_peremens, rawValue);
+              setNestedValue(Cdog_peremens, varPath, Cdog_value(value));
+            } else {
+              setNestedValue(Cdog_peremens, varPath, Cdog_value(rawValue));
+            }
+          }
+        } else if (Cdog.main.i2.split(" ")[0] === 'function') {
+          i = Cdog.main.i2.split(" ")
+          if (i[1] === 'command') {
+            UserCommands[i[2]] = "Cdog_"
+            Cdog.main.i++; Cdog.main.i2 = Cdog.main.code[Cdog.main.i]; i3 = Cdog.main.i2.split('*^')
+            for(i2 = 0; i2 < i3.length; i2++) {
+              UserCommands[i[2]] = `${UserCommands[i[2]]}%^%${i3[i2]}`
+            }
+          } else if (i[1] === 'reporter') {
+            UserReporters[i[2]] = "Cdog_"
+            Cdog.main.i++; Cdog.main.i2 = Cdog.main.code[Cdog.main.i]; i3 = Cdog.main.i2.split('*^')
+            for(i2 = 0; i2 < i3.length; i2++) {
+              UserReporters[i[2]] = `${UserReporters[i[2]]}%^%${i3[i2]}`
+            }
           }
         }
       }
@@ -111,11 +141,16 @@ function Run_Cdog(c) {
 }
 function Cdog_value(v) {
   if (typeof v === 'object' && v.type === "value") {
-    return v.value
+    return v.value;
   } else if (typeof v === 'object' && UserReporters[v.type]) {
-    return UserReporters[v.type](v.value)
-  } else if (typeof v === 'object' || typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean') {
-    return v
+    return UserReporters[v.type](v.value);
+  } else if (typeof v === 'string' && v.includes('.')) {
+    const value = getNestedValue(Cdog_peremens, v);
+    return value !== undefined ? value : v;
+  } else if (['object', 'string', 'number', 'boolean'].includes(typeof v)) {
+    return v;
+  } else {
+    return String(v);
   }
 }
 function MakeError(e, p) {
