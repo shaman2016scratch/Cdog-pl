@@ -1,13 +1,13 @@
 // C@ code
 // Created by SHAMAN2016
 // License: MIT
-UserCommands = {}; UserReporters = {};
-Cdog = {}
-Cdog_config = {
+let UserCommands = {}; let UserReporters = {};
+let Cdog = {}
+let Cdog_config = {
   "user": {},
   "program": {}
 }
-Cdog_data = {
+let Cdog_data = {
   "libs": {},
   "src": {}
 }
@@ -39,11 +39,11 @@ function getNestedValue(obj, path) {
   return current;
 }
 function Run_Cdog(c) {
-  Cdog.code = c.split("^;")
+  Cdog.code = c.split('^;\n  ')
   for(Cdog.i = 0; Cdog.i < Cdog.code.length; Cdog.i++) {
     Cdog.i2 = Cdog.code[Cdog.i]
     if (Cdog.i2 === 'let system()') {
-      Cdog.i++; Cdog.system.code = Cdog.i2.split("&^")
+      Cdog.i++; Cdog.system.code = Cdog.i2.split("&^\n  ")
       for(Cdog.system.i = 0; Cdog.system.i < Cdog.system.code; Cdog.system.i++) {
         Cdog.system.i2 = Cdog.system.code[Cdog.i]
         if (Cdog.system.i2 === '#user') {
@@ -61,7 +61,7 @@ function Run_Cdog(c) {
         }
       }
     } else if (Cdog.i2 === 'let main()' || Cdog.i2 === 'public static void main()' || Cdog.i2 === 'int main()') {
-      libraries = Object.keys(Cdog_data.libs)
+      let libraries = Object.keys(Cdog_data.libs); let lib = ""; let lib_Cdog = "";
       for(i = 0; i < libraries.length; i++) {
         lib = Cdog_data.libs[libraries[i]]
         lib_Cdog = Cdog_data.src[lib]
@@ -69,12 +69,12 @@ function Run_Cdog(c) {
           if (lib_Cdog['data.json'].sod.pl === 'Cdog') {
             Run_Cdog(lib_Cdog[lib_Cdog['data.json'].sod.from[lib.froms[i]]].code)
           } else if (lib_Cdog['data.json'].sod.pl === "ECMAScript") {
-            code = lib_Cdog[lib_Cdog['data.json'].sod.from[lib.froms[i]]].code
+            let code = lib_Cdog[lib_Cdog['data.json'].sod.from[lib.froms[i]]].code
             code()
           }
         }
       }
-      Cdog.i++; Cdog.i2 = Cdog.code[Cdog.i]; Cdog.main.code = Cdog.i2.split(";")
+      Cdog.i++; Cdog.i2 = Cdog.code[Cdog.i]; Cdog.main.code = Cdog.i2.split(";\n  ")
       for(Cdog.main.i = 0; Cdog.main.i < Cdog.main.code.length; Cdog.main.i++) {
         Cdog.main.i2 = Cdog.main.code[Cdog.main.i]
         if (Cdog.main.i2.split(" ")[0] === 'var') {
@@ -90,18 +90,18 @@ function Run_Cdog(c) {
             }
           }
         } else if (Cdog.main.i2.split(" ")[0] === 'function') {
-          i = Cdog.main.i2.split(" ")
+          let i = Cdog.main.i2.split(" ")
           if (i[1] === 'command') {
             UserCommands[i[2]] = [["args"], "Run_Cdog('"]
-            Cdog.main.i++; Cdog.main.i2 = Cdog.main.code[Cdog.main.i]; i3 = Cdog.main.i2.split('*^')
-            for(i2 = 0; i2 < i3.length; i2++) {
+            Cdog.main.i++; Cdog.main.i2 = Cdog.main.code[Cdog.main.i]; let i3 = Cdog.main.i2.split('*^\n  ')
+            for(let i2 = 0; i2 < i3.length; i2++) {
               UserCommands[i[2]] = `${UserCommands[i[2]]}${i3[i2]}`
             }
             UserCommands[i[2]] = `${UserCommands[i[2]]}')`
           } else if (i[1] === 'reporter') {
             UserReporters[i[2]] = [["args"], "Run_Cdog('"]
-            Cdog.main.i++; Cdog.main.i2 = Cdog.main.code[Cdog.main.i]; i3 = Cdog.main.i2.split('*^')
-            for(i2 = 0; i2 < i3.length; i2++) {
+            Cdog.main.i++; Cdog.main.i2 = Cdog.main.code[Cdog.main.i]; let i3 = Cdog.main.i2.split('*^')
+            for(let i2 = 0; i2 < i3.length; i2++) {
               UserReporters[i[2]] = `${UserReporters[i[2]]}${i3[i2]}`
             }
             UserReporters[i[2]] = `${UserReporters[i[2]]}')`
@@ -113,7 +113,7 @@ function Run_Cdog(c) {
     } else if (Cdog.i2.split(" ")[0] === '#include' || Cdog.i2.split(" ")[0] === '#import' || Cdog.i2.split(" ")[0] === 'import') {
       Cdog.import.code = Cdog.i2.split(" ")
       if (Cdog_data.src[Cdog.import.code[1]]) {
-        lib_Cdog = Cdog_data.src[Cdog.import.code[1]]
+        let lib_Cdog = Cdog_data.src[Cdog.import.code[1]]
         if (Cdog.import.code[2]) {
           if (Cdog.import.code[2] === 'from') {
             if (Cdog_data.libs[lib_Cdog['data.json'].sod.name]) {
